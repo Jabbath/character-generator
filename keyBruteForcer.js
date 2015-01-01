@@ -1,18 +1,4 @@
 /*
-Input: Nested array [[]]
-Output: total number of elements from everything in the second layer of arrays
-*/
-function totalLen(arr){
-	var len = 0;
-	
-	for(var i=0;i<arr.length;i++){
-		len += arr[i].length;
-	}
-	
-	return len;
-}
-
-/*
 partial will be a string with missing chars represented with '@'
 
 ranges take the form of 'A-Z','a-z' or '0-9' and there must be one present for
@@ -62,39 +48,30 @@ function makeGuessList(partial,ranges){
 	}
 	
 	console.log('intermediate results: ', intermediates);
-	var totalLength = totalLen(intermediates);
 	var results = [];
-	//now we have to combine the strings we've generated
 	
-	// We want a flat array of strings (results)
-	var pos = reg.exec(intermediates[0][0]).index; //This is the position we will combine
+	// We want a flat array of strings (results) so we combine 0 w 1 and make that the new 0, then combine that with the new one
+	//and repeat until we only have one item
+	while(intermediates.length !== 1){
+		var pos = reg.exec(intermediates[0][0]).index; //This is the position we will combine
+		var holder = []; //This will temp. hold combined strings
 		
-	for(var i=0;i<intermediates[0].length;i++){//get the combinations of the first two and push to results
-		for(var x=0;x<intermediates[1].length;x++){
-			var str = intermediates[0][i];	
+		for(var i=0;i<intermediates[0].length;i++){//get the combinations of the first two and push to our temp holder
+			for(var x=0;x<intermediates[1].length;x++){
+				var str = intermediates[0][i];	
 				
-			results.push(str.substring(0,pos) + intermediates[1][x].substring(pos,pos+1) + str.substring(pos+1,str.length));
-		}
-	}
-		
-	intermediates.splice(0,2);//remove the first two
-	
-	while(intermediates.length !== 0){
-		var holder = [];
-		pos = reg.exec(results[0]).index;
-		
-		for(var i=0;i<results.length;i++){
-			for(var x=0;x<intermediates[0].length;x++){
-				holder.push(results[i].substring(0,pos) + intermediates[0][x].substring(pos,pos+1) + results[i].substring(pos+1,str.length));
+				holder.push(str.substring(0,pos) + intermediates[1][x].substring(pos,pos+1) + str.substring(pos+1,str.length));
 			}
 		}
-		
-		results = holder;
-		intermediates.splice(0,1);
-	}
 	
-	return results;
+	intermediates[0] = holder;
+	intermediates.splice(1,1);//remove the item we just combined
+	
+	}
+
+	
+	return intermediates[0];
 }
 
-var lll = makeGuessList('A@-B@-c@',['0-9','0-9','0-9']);
+var lll = makeGuessList('A@-B@-c@-f@',['0-9','0-9','0-9','0-9']);
 console.log('results: ',lll);
