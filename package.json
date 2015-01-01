@@ -6,11 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/Jabbath/character-generator"
+  },
   "keywords": [
     "permutation",
     "string",
     "characters"
   ],
-  "author": "Anton Afanassiev <antonafana@yahoo.ca> (https://github.com/Jabbath)",
+  "author": "Anton Afanassiev <AntonAf@outlook.com> (https://github.com/Jabbath)",
   "license": "MIT"
 }
