@@ -21,11 +21,11 @@ function makeGuessList(partial,ranges){
 		match = reg.exec(partial);
 	}
 	
-	console.log('@ found: ', matches);
+	//console.log('@ found: ', matches);
 	
 	/*
 	Inputs: index of the current missing char,corresponding range
-	Outputs: array of strings with the current char replaced with possible chars
+	Outputs: array of strings, with the current char replaced with possible chars
 	*/
 	function possibles(index,currentRange){
 		var start = currentRange[0].charCodeAt(0);//Starting char
@@ -47,8 +47,7 @@ function makeGuessList(partial,ranges){
 		intermediates.push(possibles(index,currentRange));
 	}
 	
-	console.log('intermediate results: ', intermediates);
-	var results = [];
+	//console.log('intermediate results: ', intermediates);
 	
 	// We want a flat array of strings (results) so we combine 0 w 1 and make that the new 0, then combine that with the new one
 	//and repeat until we only have one item
@@ -64,8 +63,8 @@ function makeGuessList(partial,ranges){
 			}
 		}
 	
-	intermediates[0] = holder;
-	intermediates.splice(1,1);//remove the item we just combined
+		intermediates[0] = holder;
+		intermediates.splice(1,1);//remove the item we just combined
 	
 	}
 
@@ -73,5 +72,4 @@ function makeGuessList(partial,ranges){
 	return intermediates[0];
 }
 
-var lll = makeGuessList('A@-B@-c@-f@',['0-9','0-9','0-9','0-9']);
-console.log('results: ',lll);
+module.exports = makeGuessList;
